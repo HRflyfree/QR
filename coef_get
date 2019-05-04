@@ -1,0 +1,22 @@
+## obtain the coef,t value and p value from rq()
+## input: object —— summary()的results
+##         taus —— number of quantiles
+##         xlen —— number of Independent variables (including intercept)
+## output: coef,t value and p value —— coef_get <- array(NA,c(xlen,3,n1))
+## four decimals by round()
+coef_fun_ts <- function(object,taus,xlen) {
+  n1 <- length(taus)
+  coef_get <- array(NA,c(xlen,3,n1))
+  for (i in 1:n1) {
+    clist <- fs[[i]]$coefficients
+    coef <- clist[,"Value"]
+    t_value <- clist[,"t value"]
+    p_value <- clist[,"Pr(>|t|)"]
+    first <- 1
+    last <- xlen
+    coef_get[,1,i] <- round(coef[first:last],4) 
+    coef_get[,2,i] <- round(t_value[first:last],4) 
+    coef_get[,3,i] <- round(p_value[first:last],4) 
+  }
+  return(coef_get)
+}
